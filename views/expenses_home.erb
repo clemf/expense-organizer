@@ -30,3 +30,15 @@
     <% end %>
   <% end %>
 </table>
+
+<h3>Create a New Expense</h3>
+<form action="add_expense" method="post">
+  <input type="text" placeholder="Description" name="description">
+  <br>
+  <input type="text" placeholder="00.00" name="amount">
+  <br>
+  <input type="text" placeholder="YYYY-MM-DD" name="date">
+  <br>
+  <br>
+  <input type="submit" value="add">
+</form>

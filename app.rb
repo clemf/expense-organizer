@@ -10,3 +10,12 @@ get '/' do
   @expenses = Expense.all
   erb(:expenses_home)
 end
+
+post '/add_expense' do
+  @description = params.fetch("description")
+  @amount = params.fetch('amount')
+  @date = params.fetch('date')
+  @new_expense = Expense.new({:description => @description, :amount => @amount, :date => @date, :id => nil})
+  @new_expense.save()
+  redirect '/'
+end
