@@ -44,4 +44,18 @@ class Category
     end
     output
   end
+
+  define_singleton_method :get_category do |search_id|
+    query = DB.exec("SELECT * FROM categories;")
+    result = nil
+    query.each() do |category|
+      name = category.fetch("name")
+      monthly_budget = category.fetch('monthly_budget').to_f
+      id = category.fetch('id').to_i
+      if search_id == id
+        result = Category.new({:name => name, :monthly_budget => monthly_budget, :id => id})
+      end
+    end
+    result
+  end
 end
