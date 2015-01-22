@@ -26,4 +26,22 @@ class Category
   define_method :== do |another_category|
     (self.name.==another_category.name).&(self.monthly_budget.==another_category.monthly_budget)
   end
+
+  define_method :associated_expense_ids do
+    query = DB.exec(
+    "SELECT e.id FROM
+      expenses e
+    INNER JOIN
+      expenses_categories ec
+      ON e.id=ec.expense_id
+    INNER JOIN
+      categories c
+      ON ec.category_id=c.id
+    WHERE c.id= #{@id};")
+    output = []
+    query.each() do |hash|
+      output.push(hash["id"].to_i)
+    end
+    output
+  end
 end

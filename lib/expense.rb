@@ -28,4 +28,26 @@ class Expense
   define_method :== do |another_expense|
     (self.description.==another_expense.description).&(self.date.==another_expense.date).&(self.amount.==another_expense.amount)
   end
+
+  define_method :associate_category do |category|
+    DB.exec("INSERT INTO expenses_categories (expense_id, category_id) VALUES (#{@id}, #{category.id});")
+  end
+
+  define_method :associated_category_ids do
+    query = DB.exec(
+    "SELECT c.id FROM
+      categories c
+    INNER JOIN
+      expenses_categories ec
+      ON c.id=ec.category_id
+    INNER JOIN
+      expenses e
+      ON ec.expense_id=e.id
+    WHERE e.id= #{@id};")
+    output = []
+    query.each() do |hash|
+      output.push(hash["id"].to_i)
+    end
+    output
+  end
 end

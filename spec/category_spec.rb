@@ -29,3 +29,14 @@ describe '#==' do
     expect(test_category == test_category2).to eq true
   end
 end
+
+describe '#associated_expense_ids' do
+  it 'lists all expenses associated with the category' do
+    test_category = Category.new({:name => "Fun", :monthly_budget => 54.31, :id => nil})
+    test_category.save
+    test_expense = Expense.new({:description => "12 one sided bicycles", :amount => 54.31, :date => "2001-01-01", :id => nil})
+    test_expense.save
+    test_expense.associate_category(test_category)
+    expect(test_category.associated_expense_ids).to eq [test_expense.id]
+  end
+end
