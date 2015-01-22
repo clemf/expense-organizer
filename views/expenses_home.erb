@@ -1,0 +1,32 @@
+<h1>Expenses</h1>
+
+<h3>For real</h3>
+
+<table>
+  <tr>
+    <th>
+      Description
+    </th>
+    <th>
+      Amount
+    </th>
+    <th>
+      Date
+    </th>
+  </tr>
+  <% if @expenses != nil %>
+    <% @expenses.each() do |expense| %>
+      <tr>
+        <td>
+          <%= expense.description %>
+        </td>
+        <td>
+          <%= expense.amount %>
+        </td>
+        <td>
+          <%= expense.date %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
