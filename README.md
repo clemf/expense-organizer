@@ -1,5 +1,5 @@
-expense
-==============
+expense-organizer
+=================
 
 A web app that organizes expenses by category. Written in [Ruby](http://www.ruby-lang.org/) with the help of [RSpec](http://rspec.info/), [Sinatra](http://www.sinatrarb.com/), and [Bootstrap](http://http://getbootstrap.com/). The data is stored in a PostgreSQL backend.
 
