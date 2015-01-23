@@ -37,7 +37,7 @@ describe "#associate_category" do
     test_category.save
     test_expense = Expense.new({:description => "12 one sided bicycles", :amount => 54.31, :date => "2001-01-01", :id => nil})
     test_expense.save
-    test_expense.associate_category(test_category)
+    test_expense.associate_category(test_category.id)
     expect(test_category.associated_expense_ids).to eq [test_expense.id]
   end
 end
@@ -48,7 +48,15 @@ describe "#associated_category_ids" do
     test_category.save
     test_expense = Expense.new({:description => "12 one sided bicycles", :amount => 54.31, :date => "2001-01-01", :id => nil})
     test_expense.save
-    test_expense.associate_category(test_category)
+    test_expense.associate_category(test_category.id)
     expect(test_expense.associated_category_ids).to eq [test_category.id]
+  end
+end
+
+describe '#get_expense' do
+  it 'returns the expense associated with its id' do
+    test_expense = Expense.new({:description => "12 one sided bicycles", :amount => 54.31, :date => "2001-01-01", :id => nil})
+    test_expense.save
+    expect(Expense.get_expense(test_expense.id)).to(eq(test_expense))
   end
 end

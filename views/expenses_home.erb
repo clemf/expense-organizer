@@ -13,6 +13,12 @@
     <th>
       Date
     </th>
+    <th>
+      Categories
+    </th>
+    <th>
+      Add a Category
+    </th>
   </tr>
   <% if @expenses != nil %>
     <% @expenses.each() do |expense| %>
@@ -25,6 +31,21 @@
         </td>
         <td>
           <%= expense.date %>
+        </td>
+        <td>
+          <%= expense.associated_category_ids %>
+        </td>
+        <td>
+          <form action="/associate_category" method="post">
+            <select id="category_id" name="category_id" type="text">
+                <option value='nil'>Select Category</option>
+              <% Category.all().each() do |category| %>
+                <%= "<option value=#{category.id}>#{category.name}</option>" %>
+              <% end %>
+            </select>
+            <%= "<input type='hidden' name='expense_id' value='#{expense.id}'>" %>
+            <button type="submit">Add category</button>
+          </form>
         </td>
       </tr>
     <% end %>

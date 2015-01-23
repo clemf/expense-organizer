@@ -29,8 +29,8 @@ class Expense
     (self.description.==another_expense.description).&(self.date.==another_expense.date).&(self.amount.==another_expense.amount)
   end
 
-  define_method :associate_category do |category|
-    DB.exec("INSERT INTO expenses_categories (expense_id, category_id) VALUES (#{@id}, #{category.id});")
+  define_method :associate_category do |category_id|
+    DB.exec("INSERT INTO expenses_categories (expense_id, category_id) VALUES (#{@id}, #{category_id});")
   end
 
   define_method :associated_category_ids do
@@ -49,5 +49,20 @@ class Expense
       output.push(hash["id"].to_i)
     end
     output
+  end
+
+  define_singleton_method :get_expense do |search_id|
+    query = DB.exec("SELECT * FROM expenses;")
+    result = nil
+    query.each() do |expense|
+      description = expense.fetch("description")
+      amount = expense.fetch('amount').to_f
+      date = expense.fetch("date")
+      id = expense.fetch('id').to_i
+      if search_id == id
+        result = Expense.new({:description => description, :amount => amount, :date => date, :id => id})
+      end
+    end
+    result
   end
 end
