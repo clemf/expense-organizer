@@ -33,7 +33,13 @@
           <%= expense.date %>
         </td>
         <td>
-          <%= expense.associated_category_ids %>
+          <ul>
+            <% expense.associated_category_ids.each() do |cat_ids|%>
+              <li>
+                <%= "#{Category.get_category(cat_ids).name}, " %>
+              </li>
+            <% end %>
+          <ul>
         </td>
         <td>
           <form action="/associate_category" method="post">
